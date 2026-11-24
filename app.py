@@ -9,7 +9,7 @@ import streamlit as st
 
 
 st.set_page_config(
-    page_title="Akış Lab | Akıllı Su Optimizasyonu",
+    page_title="Wilo HydroCycle | Akıllı Su Optimizasyonu",
     page_icon="💧",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -107,30 +107,31 @@ def section_heading(anchor: str, kicker: str, title: str, description: str) -> N
     )
 
 
-def story_card(number: str, title: str, description: str) -> str:
-    return f'<div class="story-card"><span class="num">{number}</span><b>{title}</b><p>{description}</p></div>'
+def story_card(number: str, title: str, description: str, tone: str) -> str:
+    return f'<div class="story-card tone-{tone}"><span class="num">{number}</span><b>{title}</b><p>{description}</p></div>'
 
 
 def step_card(number: str, title: str, description: str) -> str:
-    return f'<div class="step-card"><span class="step">AŞAMA {number}</span><b>{title}</b><p>{description}</p></div>'
+    return f'<div class="step-card tone-{number}"><span class="step">AŞAMA {number}</span><b>{title}</b><p>{description}</p></div>'
 
 
 st.markdown(
     """
     <style>
-      :root { --ink:#14283d; --muted:#75869a; --teal:#16a898; --teal-dark:#087f77; --line:#e3eaf0; --paper:#f5f7f8; --white:#fff; --radius:16px; --shadow:0 12px 36px rgba(18,43,69,.055); }
-      .stApp { background:var(--paper); color:var(--ink); font-family:Inter,'Segoe UI',sans-serif; }
+      :root { --ink:#14283d; --muted:#75869a; --teal:#16b8a7; --teal-dark:#087f77; --blue:#4c8dff; --violet:#8a68f8; --coral:#ff6b70; --lime:#a5cb51; --line:#e3eaf0; --paper:#f5f6fb; --white:#fff; --radius:16px; --shadow:0 12px 36px rgba(18,43,69,.07); }
+      .stApp { background:radial-gradient(ellipse at 92% 10%,rgba(138,104,248,.09),transparent 27%),radial-gradient(ellipse at 12% 42%,rgba(76,141,255,.06),transparent 28%),var(--paper); color:var(--ink); font-family:Inter,'Segoe UI',sans-serif; }
       [data-testid="stHeader"], [data-testid="stToolbar"] { visibility:hidden; height:0; }
-      [data-testid="stSidebar"] { background:#102840; border-right:1px solid #213d57; }
+      [data-testid="stSidebar"] { background:linear-gradient(165deg,#102840 0%,#172f57 56%,#24336a 100%); border-right:1px solid #324267; }
       [data-testid="stSidebar"] * { color:#e7eff5; }
       [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { color:#9fb2c3; font-size:12px; }
       [data-testid="stSidebar"] a { display:block; padding:10px 11px; margin:4px 0; border-radius:8px; color:#bdcbd7!important; font-size:12px; transition:all .18s ease; }
       [data-testid="stSidebar"] a:hover { color:#fff!important; background:#1d3b56; }
       .block-container { padding-top:1.1rem; padding-bottom:3.5rem; max-width:1360px; }
-      .brand { color:#fff; font:800 22px Inter,'Segoe UI',sans-serif; letter-spacing:.045em; margin:8px 0 22px; }
-      .brand span { color:#5ed0c0; }
+      .brand { color:#fff; font:800 22px Inter,'Segoe UI',sans-serif; letter-spacing:-.04em; margin:8px 0 22px; white-space:nowrap; }
+      .brand .brand-wilo { color:#ff6978; margin-right:6px; }
+      .brand .brand-product { color:#8be4da; }
       .brand small { display:block; color:#8ea7ba; font:600 9px 'Segoe UI',sans-serif; letter-spacing:.18em; margin-top:4px; }
-      .hero { background:radial-gradient(ellipse at 80% 30%,rgba(42,143,146,.28),transparent 32%),linear-gradient(112deg,#10283f 0%,#173d58 64%,#154355 100%); border:1px solid #274b62; border-radius:22px; padding:38px 46px; color:white; min-height:340px; position:relative; overflow:hidden; display:grid; grid-template-columns:1.08fr .92fr; align-items:center; box-shadow:0 20px 55px rgba(12,35,53,.14); }
+      .hero { background:radial-gradient(ellipse at 78% 20%,rgba(41,218,193,.32),transparent 31%),radial-gradient(ellipse at 24% 100%,rgba(98,104,255,.25),transparent 43%),linear-gradient(112deg,#122c50 0%,#1c4771 57%,#164e63 100%); border:1px solid #366788; border-radius:22px; padding:38px 46px; color:white; min-height:340px; position:relative; overflow:hidden; display:grid; grid-template-columns:1.08fr .92fr; align-items:center; box-shadow:0 24px 60px rgba(35,58,120,.2); }
       .hero:before { content:''; position:absolute; width:450px; height:450px; right:-100px; top:-250px; border:1px solid rgba(130,221,209,.11); border-radius:50%; box-shadow:0 0 0 30px rgba(130,221,209,.025),0 0 0 75px rgba(130,221,209,.025),0 0 0 125px rgba(130,221,209,.02); }
       .hero-copy { position:relative; z-index:2; max-width:620px; }
       .hero .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:9px; font-weight:700; letter-spacing:.15em; color:#87ded1; background:rgba(91,206,191,.1); border:1px solid rgba(126,218,207,.22); border-radius:30px; padding:7px 10px; }
@@ -148,14 +149,21 @@ st.markdown(
       .section-kicker { color:var(--teal-dark); font:700 9px Inter,'Segoe UI',sans-serif; letter-spacing:.16em; text-transform:uppercase; margin-bottom:7px; }
       .section-title { margin:0; color:var(--ink); font:700 clamp(20px,2vw,25px) Inter,'Segoe UI',sans-serif; letter-spacing:-.035em; }
       .section-sub { margin:6px 0 0; color:var(--muted); font-size:11px; line-height:1.6; }
-      .story-card { height:100%; min-height:160px; background:linear-gradient(150deg,#fff,#fbfcfc); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
-      .story-card:hover { transform:translateY(-3px); border-color:#b9dcd6; box-shadow:0 16px 34px rgba(18,43,69,.085); }
-      .story-card .num { display:flex; align-items:center; gap:8px; color:var(--teal-dark); font:700 9px Inter,'Segoe UI',sans-serif; letter-spacing:.12em; }
-      .story-card .num:before { content:''; width:23px; height:1px; background:#65c8bb; }
+      .story-card { height:100%; min-height:160px; background:linear-gradient(150deg,#fff,#fbfcff); border:1px solid var(--line); border-top:3px solid var(--card-accent,var(--teal)); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+      .story-card.tone-coral { --card-accent:var(--coral); --card-wash:#fff0f0; }
+      .story-card.tone-blue { --card-accent:var(--blue); --card-wash:#eef4ff; }
+      .story-card.tone-violet { --card-accent:var(--violet); --card-wash:#f3efff; }
+      .story-card:hover { transform:translateY(-3px); border-color:var(--card-accent); box-shadow:0 16px 34px rgba(18,43,69,.11); }
+      .story-card .num { display:flex; align-items:center; gap:8px; color:var(--card-accent); font:700 9px Inter,'Segoe UI',sans-serif; letter-spacing:.12em; }
+      .story-card .num:before { content:''; width:23px; height:2px; background:var(--card-accent); }
       .story-card b { display:block; color:#1d344a; font:700 15px Inter,'Segoe UI',sans-serif; margin:17px 0 8px; letter-spacing:-.02em; }
       .story-card p { color:#77899a; font-size:10px; line-height:1.7; margin:0; }
-      .step-card { height:100%; min-height:146px; background:#fff; border:1px solid var(--line); border-radius:13px; padding:17px 16px; box-shadow:0 8px 22px rgba(18,43,69,.035); }
-      .step-card .step { display:inline-block; color:#118f84; background:#eaf7f4; border-radius:6px; padding:5px 7px; font:700 8px Inter,'Segoe UI',sans-serif; letter-spacing:.1em; }
+      .step-card { height:100%; min-height:146px; background:linear-gradient(145deg,#fff,#fbfcff); border:1px solid var(--line); border-top:3px solid var(--step-accent,var(--teal)); border-radius:13px; padding:17px 16px; box-shadow:0 8px 22px rgba(18,43,69,.045); }
+      .step-card.tone-01 { --step-accent:var(--blue); --step-wash:#edf3ff; }
+      .step-card.tone-02 { --step-accent:var(--violet); --step-wash:#f2efff; }
+      .step-card.tone-03 { --step-accent:var(--coral); --step-wash:#fff0f0; }
+      .step-card.tone-04 { --step-accent:var(--teal); --step-wash:#eaf8f5; }
+      .step-card .step { display:inline-block; color:var(--step-accent); background:var(--step-wash); border-radius:6px; padding:5px 7px; font:700 8px Inter,'Segoe UI',sans-serif; letter-spacing:.1em; }
       .step-card b { display:block; color:#1f384f; font:700 13px Inter,'Segoe UI',sans-serif; margin:12px 0 6px; }
       .step-card p { color:#7f90a0; font-size:9px; line-height:1.6; margin:0; }
       .step-arrow { color:#6bbab0; font-size:18px; text-align:center; padding-top:43px; }
@@ -178,7 +186,7 @@ st.markdown(
       .insight-detail { color:#8191a0; font-size:8px; line-height:1.45; }
       .notice { border-radius:10px; padding:12px 15px; background:#edf8f5; border:1px solid #d7eee8; color:#377f76; font-size:10px; line-height:1.6; }
       .warn { background:#fff8ed; border:1px solid #f1e5cf; color:#927044; }
-      .impact-banner { background:radial-gradient(ellipse at 90% 0%,rgba(67,166,158,.25),transparent 35%),linear-gradient(135deg,#142d46,#1c435a); border-radius:var(--radius); padding:26px 28px; color:#fff; min-height:100%; box-shadow:0 15px 32px rgba(18,43,69,.12); }
+      .impact-banner { background:radial-gradient(ellipse at 90% 0%,rgba(41,218,193,.33),transparent 35%),radial-gradient(ellipse at 0% 100%,rgba(138,104,248,.25),transparent 45%),linear-gradient(135deg,#173358,#20547a); border:1px solid #37688c; border-radius:var(--radius); padding:26px 28px; color:#fff; min-height:100%; box-shadow:0 15px 32px rgba(18,43,69,.15); }
       .impact-banner .eyebrow { color:#85d8cb; font-size:8px; font-weight:700; letter-spacing:.15em; }
       .impact-banner b { display:block; font:700 18px/1.3 Inter,'Segoe UI',sans-serif; margin-top:12px; letter-spacing:-.025em; }
       .impact-banner p { color:#bdced8; font-size:10px; line-height:1.75; margin:8px 0 16px; }
@@ -190,8 +198,8 @@ st.markdown(
       .wue-stat span { display:block; color:#7d8fa0; font-size:8px; letter-spacing:.08em; font-weight:700; }
       .wue-stat b { display:block; color:#20394f; font:700 23px Inter,'Segoe UI',sans-serif; margin-top:7px; white-space:nowrap; letter-spacing:-.04em; }
       .wue-stat b small { color:#8594a2; font:500 8px 'Segoe UI',sans-serif; margin-left:3px; letter-spacing:0; }
-      .wue-stat.opt { background:#ecf8f5; border-color:#d9eee8; }
-      .wue-stat.opt b { color:#108c80; }
+      .wue-stat.opt { background:linear-gradient(140deg,#e7fbf7,#edeeff); border-color:#cdebe5; }
+      .wue-stat.opt b { color:#078c81; }
       .source-chip { height:100%; min-height:105px; border:1px solid var(--line); background:#fff; border-radius:12px; padding:15px 16px; box-shadow:var(--shadow); transition:transform .18s ease,border-color .18s ease; }
       .source-chip:hover { transform:translateY(-2px); border-color:#b7dad4; }
       .source-chip a { color:#203d55; font:700 10px Inter,'Segoe UI',sans-serif; text-decoration:none; }
@@ -207,7 +215,7 @@ st.markdown(
 
 
 with st.sidebar:
-    st.markdown('<div class="brand">AKIŞ<span>.LAB</span><small>AKILLI SU YÖNETİMİ</small></div>', unsafe_allow_html=True)
+    st.markdown('<div class="brand"><span class="brand-wilo">Wilo</span><span class="brand-product">HydroCycle</span><small>AKILLI SU YÖNETİMİ</small></div>', unsafe_allow_html=True)
     st.markdown("**Hackathon konsepti**  \nVeri merkezi soğutma sistemi")
     st.markdown("---")
     st.markdown('<a href="#problem" style="color:#d8e5ee;text-decoration:none">01 &nbsp; Problem</a>', unsafe_allow_html=True)
@@ -265,13 +273,13 @@ st.markdown(
 section_heading("problem", "01 · PROBLEM", "Görünmeyen kaybı görünür kılın", "Veri merkezlerinde soğutma talebi değişirken pompa ayarları çoğu zaman sabit kalır.")
 problem_cols = st.columns(3, gap="medium")
 problem_cards = [
-    ("01 / KAYNAK", "Gereğinden fazla su", "Buharlaşma, tahliye ve değişken yükler su kullanımını izlemeyi zorlaştırır."),
-    ("02 / OPERASYON", "Sabit pompa ayarları", "Değişen soğutma ihtiyacına uymayan çalışma noktaları enerji ve su verimini düşürebilir."),
-    ("03 / GÖRÜNÜRLÜK", "Geç fark edilen anomali", "Debi, sıcaklık ve basınç sinyalleri birlikte değerlendirilmediğinde kayıp geç görünür."),
+    ("01 / KAYNAK", "Gereğinden fazla su", "Buharlaşma, tahliye ve değişken yükler su kullanımını izlemeyi zorlaştırır.", "coral"),
+    ("02 / OPERASYON", "Sabit pompa ayarları", "Değişen soğutma ihtiyacına uymayan çalışma noktaları enerji ve su verimini düşürebilir.", "blue"),
+    ("03 / GÖRÜNÜRLÜK", "Geç fark edilen anomali", "Debi, sıcaklık ve basınç sinyalleri birlikte değerlendirilmediğinde kayıp geç görünür.", "violet"),
 ]
-for column, (number, title, copy) in zip(problem_cols, problem_cards):
+for column, (number, title, copy, tone) in zip(problem_cols, problem_cards):
     with column:
-        st.markdown(story_card(number, title, copy), unsafe_allow_html=True)
+        st.markdown(story_card(number, title, copy, tone), unsafe_allow_html=True)
 
 section_heading("cozum-akisi", "02 · ÇÖZÜM AKIŞI", "Ölçümden eyleme, tek bir akıllı döngü", "Sistem sinyalleri anlamlandırır, öneri üretir ve su etkisini aynı akışta izler.")
 steps = [
@@ -347,4 +355,4 @@ for column, (title, description, url) in zip(source_cols, sources):
     with column:
         st.markdown(f'<div class="source-chip"><a href="{url}" target="_blank">{title} ↗</a><p>{description}</p></div>', unsafe_allow_html=True)
 
-st.markdown('<div style="height:18px"></div><div class="notice warn">Bu hackathon prototipi simüle edilmiş veriler ve açık optimizasyon varsayımları kullanır. Gerçek sensör bağlantısı, yapay zekâ servisi veya doğrulanmış tasarruf ölçümü yoktur.</div><p class="small-note" style="margin-top:15px">AKIŞ.LAB · Proje konsept tasarımı · Simülasyon modu</p>', unsafe_allow_html=True)
+st.markdown('<div style="height:18px"></div><div class="notice warn">Bu hackathon prototipi simüle edilmiş veriler ve açık optimizasyon varsayımları kullanır. Gerçek sensör bağlantısı, yapay zekâ servisi veya doğrulanmış tasarruf ölçümü yoktur.</div><p class="small-note" style="margin-top:15px">Wilo HydroCycle · Proje konsept tasarımı · Simülasyon modu</p>', unsafe_allow_html=True)
