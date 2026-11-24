@@ -120,7 +120,10 @@ st.markdown(
     <style>
       :root { --ink:#14283d; --muted:#75869a; --teal:#16b8a7; --teal-dark:#087f77; --blue:#4c8dff; --violet:#8a68f8; --coral:#ff6b70; --lime:#a5cb51; --line:#e3eaf0; --paper:#f5f6fb; --white:#fff; --radius:16px; --shadow:0 12px 36px rgba(18,43,69,.07); }
       .stApp { background:#f2f5f7; color:var(--ink); font-family:Inter,'Segoe UI',sans-serif; }
-      [data-testid="stHeader"], [data-testid="stToolbar"] { visibility:hidden; height:0; }
+      [data-testid="stHeader"] { visibility:visible; height:0; overflow:visible; position:relative; z-index:1000; background:transparent; }
+      [data-testid="stHeader"] [data-testid="stToolbar"] { visibility:visible; height:0; overflow:visible; background:transparent; }
+      [data-testid="stHeader"] [data-testid="stExpandSidebarButton"] { visibility:visible!important; pointer-events:auto; }
+      [data-testid="stHeader"] [data-testid="stToolbarActions"], [data-testid="stHeader"] [data-testid="stAppDeployButton"], [data-testid="stHeader"] [data-testid="stMainMenu"] { visibility:hidden; }
       [data-testid="stSidebar"] { background:#102b43; border-right:1px solid #29445b; }
       [data-testid="stSidebar"] * { color:#e7eff5; }
       [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { color:#a9bac8; font-size:12px; }
